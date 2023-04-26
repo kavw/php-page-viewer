@@ -1,0 +1,90 @@
+<?php
+
+declare(strict_types=1);
+
+use PV\App\Document\Routes\Home\HomeController;
+use PV\App\Document\Routes\Search\SearchController;
+use PV\App\View\Layouts\MainLayout;
+use PV\Infra\View\SimpleRenderer;
+use function PV\Infra\Tags\action;
+use function PV\Infra\Tags\alt;
+use function PV\Infra\Tags\attr;
+use function PV\Infra\Tags\body;
+use function PV\Infra\Tags\div;
+use function PV\Infra\Tags\footer;
+use function PV\Infra\Tags\form;
+use function PV\Infra\Tags\head;
+use function PV\Infra\Tags\header as header_;
+use function PV\Infra\Tags\href;
+use function PV\Infra\Tags\html;
+use function PV\Infra\Tags\img;
+use function PV\Infra\Tags\klass;
+use function PV\Infra\Tags\lang;
+use function PV\Infra\Tags\css;
+use function PV\Infra\Tags\main;
+use function PV\Infra\Tags\meta;
+use function PV\Infra\Tags\meta_charset;
+use function PV\Infra\Tags\meta_description;
+use function PV\Infra\Tags\meta_keywords;
+use function PV\Infra\Tags\meta_name;
+use function PV\Infra\Tags\raw;
+use function PV\Infra\Tags\small;
+use function PV\Infra\Tags\span;
+use function PV\Infra\Tags\src;
+use function PV\Infra\Tags\submit;
+use function PV\Infra\Tags\tabindex;
+use function PV\Infra\Tags\text;
+use function PV\Infra\Tags\title;
+use function PV\Infra\Tags\a;
+use const PV\Infra\Tags\META_VIEWPORT;
+use const PV\Infra\Tags\SPACER_GIF;
+
+/** @var SimpleRenderer $this */
+/** @var MainLayout $view */
+$view = $this->view;
+
+echo html(lang('en'),
+    head(
+        meta_charset('utf-8'),
+        meta_description('Here is an example of simple php app from scratch'),
+        meta_keywords('php, phpunit, phpstan, docker, mysql'),
+        meta_name('viewport', META_VIEWPORT),
+        meta(attr('http-equiv', 'X-UA-Compatible'), attr('content', 'ie=edge')),
+
+        css($this->media('main.css')),
+        css($this->media('print.css'), media: 'print'),
+
+        title(raw($this->slot('title', default: 'Welcome!')))
+    ),
+    body(
+        div(klass('wrapper'),
+            div(klass('container'),
+
+                header_(
+                    div(klass('search-form-container'),
+                        span(klass('home-logo'),
+                            a(
+                                href($this->link(HomeController::NAME)),
+                                img(alt('Home'), src(SPACER_GIF))
+                            ),
+                        ),
+
+                        form(klass('search-form'),
+                            action($this->link(SearchController::NAME)),
+                            text('term', $this->slot('search-term'), tabindex(20)),
+                            submit('Search', klass('button'), tabindex(21))
+                        )
+                    ),
+                ),
+
+                main(klass('content'),
+                    raw($this->content())
+                ),
+            ),
+
+            footer(
+                small('© Copyright, ', date('Y'), ', Example Stuff')
+            )
+        )
+    )
+);

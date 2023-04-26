@@ -1,0 +1,86 @@
+{
+  "name" : "kavw/php-pv",
+  "description" : "PHP page viewer examples",
+  "type" : "project",
+  "license" : "proprietary",
+  "minimum-stability" : "dev",
+  "prefer-stable" : true,
+  "require" : {
+    "php" : "^8.2",
+    "ext-apcu" : "*",
+    "ext-json" : "*",
+    "ext-pdo" : "*",
+    "psr/cache" : "^3.0",
+    "psr/container" : "^2.0",
+    "psr/event-dispatcher" : "^1.0",
+    "psr/link" : "^2.0",
+    "psr/log" : "^3.0",
+    "psr/simple-cache" : "^3.0"
+  },
+  "config" : {
+    "optimize-autoloader" : true,
+    "preferred-install" : {
+      "*" : "dist"
+    },
+    "sort-packages" : true,
+    "allow-plugins" : {
+      "symfony/runtime" : true
+    }
+  },
+  "autoload" : {
+    "psr-4" : {
+      "PV\\" : "src/"
+    },
+    "files" : [
+      "src/Infra/Tags/fn/attrs.php",
+      "src/Infra/Tags/fn/common.php",
+      "src/Infra/Tags/fn/constants.php",
+      "src/Infra/Tags/fn/input_tags.php",
+      "src/Infra/Tags/fn/meta_tags.php",
+      "src/Infra/Tags/fn/shortcuts.php",
+      "src/Infra/Tags/fn/single_tags.php",
+      "src/Infra/Tags/fn/tags.php"
+    ]
+  },
+  "require-dev" : {
+    "dg/bypass-finals" : "^1.3",
+    "friendsofphp/php-cs-fixer" : "^3.9",
+    "phpbench/phpbench" : "^1.0@alpha",
+    "phpstan/phpstan" : "^1.9",
+    "phpunit/phpunit" : "^10.1",
+    "squizlabs/php_codesniffer" : "^3.7",
+    "symfony/test-pack" : "^1.0"
+  },
+  "autoload-dev" : {
+    "psr-4" : {
+      "PV\\Bench\\" : "bench/"
+    }
+  },
+  "scripts" : {
+    "cs" : [
+      "Composer\\Config::disableProcessTimeout",
+      "vendor/bin/phpcs -s --exclude=PSR1.Files.SideEffects src"
+    ],
+    "cs-fix" : [
+      "Composer\\Config::disableProcessTimeout",
+      "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes src"
+    ],
+    "cs-fix2" : [
+      "Composer\\Config::disableProcessTimeout",
+      "vendor/bin/phpcbf src"
+    ],
+    "test" : [
+      "Composer\\Config::disableProcessTimeout",
+      "vendor/bin/phpunit src"
+    ],
+    "stan" : [
+      "Composer\\Config::disableProcessTimeout",
+      "vendor/bin/phpstan analyse -l9 src"
+    ],
+    "check" : [
+      "@cs",
+      "@stan",
+      "@test"
+    ]
+  }
+}

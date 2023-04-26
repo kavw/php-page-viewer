@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+use PV\App\Document\Routes\Home\HomeView;
+use PV\App\Document\View\ListView;
+use PV\App\View\Components\Message;
+use PV\App\View\Layouts\MainLayout;
+use PV\Infra\View\SimpleRenderer;
+use function PV\Infra\Tags\div;
+use function PV\Infra\Tags\klass;
+use function PV\Infra\Tags\raw;
+use function PV\Infra\Tags\test;
+
+/** @var SimpleRenderer $this */
+/** @var HomeView $view */
+$view = $this->view;
+
+$this->layout(new MainLayout());
+
+echo test((bool) $view->message,
+    raw($this->include(new Message(text: $view->message))),
+    else: div(klass('home'),
+        raw($this->include(new ListView(documents: $view->docs)))
+    )
+);
+
+if ($view->searchTerm) {
+    $this->begin('search-term');
+    echo $view->searchTerm;
+    $this->end();
+}
+
+

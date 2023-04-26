@@ -1,0 +1,30 @@
+#!/bin/bash
+set -peu
+
+__kavw_download__resolve_dir()
+{
+    local dir_name="$1"
+    local suffix=
+
+    until mkdir -- "$dir_name$suffix" 2>/dev/null; do
+        suffix=$(( suffix + 1 ))
+        if [ "$suffix" -eq 100 ]; then
+            echo 'Cannot create directory' >&2
+            return 1
+        fi
+    done
+
+    echo "$dir_name$suffix"
+}
+
+__kavw_download__main()
+{
+    local dir_name=
+    dir_name="$(__kavw_download__resolve_dir sysio-api)"
+    echo "Target directory: ${dir_name}"
+    git clone git@github.com:kavw/symfony-play.git "$dir_name"
+    chmod u+x "$dir_name/bin/run"
+    "$dir_name/bin/run"
+}
+
+__kavw_download__main "$@"

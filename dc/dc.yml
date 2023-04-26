@@ -1,0 +1,91 @@
+version: "3.9"
+
+x-user-args: &x-user-args
+  APP_USER: ${APP_USER:-app}
+  APP_UID: ${APP_UID:-1000}
+  APP_GID: ${APP_GID:-1000}
+  APP_TIMEZONE: ${APP_TIMEZONE:-UTC}
+
+services:
+  nginx:
+    build:
+      context: ..
+      dockerfile: docker/nginx/Dockerfile
+      args:
+        APP_ROOT_PATH: ${APP_DIR_MAP}/public
+        APP_FASTCGI_PASS: php-fpm
+    ports:
+      - ${HTTP_PORT_NGINX_FPM}:80
+    volumes:
+      - ${APP_DIR}:${APP_DIR_MAP}
+    env_file:
+      - ./.env
+    environment:
+      PS1_SRV_NAME: nginx-fpm
+    depends_on:
+      - php-fpm
+
+  php-fpm: &php-fpm
+    build: &php-fpm-build
+      context: ..
+      dockerfile: docker/php/Dockerfile
+      target: basic
+      args: &php-fpm-build-args
+        <<: *x-user-args
+        PHP_VER: 8.2.5
+        PHP_SAPI: fpm
+    volumes:
+      - ${APP_DIR}:${APP_DIR_MAP}
+    working_dir: ${APP_DIR_MAP}
+    env_file:
+      - ./.env
+    environment:
+      PS1_SRV_NAME: php-fpm
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  php-cli:
+    <<: *php-fpm
+    build:
+      <<: *php-fpm-build
+      args:
+        <<: *php-fpm-build-args
+        PHP_SAPI: cli
+
+  mysql:
+    build:
+      context: ..
+      dockerfile: docker/mysql/Dockerfile
+      args:
+        <<: *x-user-args
+        MYSQL_VER: 8.0.30
+        MYSQL_DB: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USERNAME}
+        MYSQL_PASS: ${MYSQL_PASSWORD}
+    command: --default-authentication-plugin=mysql_native_password
+    env_file:
+      - ./.env
+    environment:
+      PS1_SRV_NAME: mysql
+    healthcheck:
+      test: ["CMD", 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD' ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    volumes:
+      - ../var/mysql:/var/lib/mysql
+
+  assets:
+    build:
+      context: ..
+      dockerfile: docker/assets/Dockerfile
+    volumes:
+      - ${APP_DIR}:${APP_DIR_MAP}
+    working_dir: ${APP_DIR_MAP}
+    env_file:
+      - ./.env
+    environment:
+      PS1_SRV_NAME: 'assets'
+

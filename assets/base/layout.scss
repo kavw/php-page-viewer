@@ -1,0 +1,38 @@
+
+html, body {
+  height: 100%;
+}
+
+body {
+  & > .wrapper {
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    max-width: 1164px;
+    margin: 0 auto;
+
+    & > .container {
+
+      flex: 1 0 auto;
+      background: var(--text-bg-color);
+
+      & > header {
+        padding: var(--content-top-padding) var(--content-side-padding) .7em;
+        border-bottom: 1px solid var(--main-border-color);
+      }
+
+      & > main {
+        padding: 1.8em var(--content-side-padding);
+      }
+    }
+
+    & > footer {
+        flex: 0 0 auto;
+        min-height: 60px;
+        padding: var(--content-top-padding) var(--content-side-padding);
+        border-top: 1px solid var(--main-border-color);
+        background: var(--text-bg-color);
+    }
+  }
+}

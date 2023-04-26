@@ -1,0 +1,12 @@
+.search-form-container {
+  min-width: 380px;
+
+  .search-form {
+    display: inline-block;
+    vertical-align: bottom;
+
+    input[type=text] {
+      margin-right: .4em;
+    }
+  }
+}

@@ -1,0 +1,5 @@
+main {
+  & > .message {
+    padding: var(--content-top-padding) 0;
+  }
+}

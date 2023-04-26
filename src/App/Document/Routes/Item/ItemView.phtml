@@ -1,0 +1,25 @@
+<?php
+
+declare(strict_types=1);
+
+use PV\App\Document\Routes\Item\ItemView;
+use PV\App\View\Layouts\MainLayout;
+use PV\Infra\View\SimpleRenderer;
+use function PV\Infra\Tags\encode;
+
+/** @var SimpleRenderer $this */
+/** @var ItemView $view */
+$view = $this->view;
+
+$this->layout(new MainLayout()); ?>
+
+<div class="document-view"><?= $view->document->getContent() ?></div>
+
+<?php if ($view->document->getTitle()): ?>
+
+    <?php $this->begin('title'); ?>
+        <?= encode($view->document->getTitle()) ?>
+    <?php $this->end(); ?>
+
+<?php endif; ?>
+

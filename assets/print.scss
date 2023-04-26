@@ -1,0 +1,45 @@
+html, body {
+  margin: 0;
+  height: 100%;
+  font: 1em Verdana, Arial, Helvetica, sans-serif;
+  color: #313131;
+  background: #FFF;
+}
+
+body > .wrapper {
+  width: 100%;
+  margin: 0 auto;
+  border-width: 0;
+}
+
+body > .wrapper > .container {
+  padding: 0 1em;
+}
+
+body > .wrapper > .container > header {
+  padding: 1em 0;
+  border-bottom: 1px solid #313131;
+}
+
+
+body > .wrapper > .container > header .search-form-container {
+  display: none;
+}
+
+body > .wrapper > .container > .content {
+  padding: 1em 0 1.2em;
+}
+
+
+body > .wrapper > footer {
+  display: none;
+}
+
+h1 {
+  margin: 0;
+  padding: 10px 0;
+}
+
+.document-list-item  {
+  padding: 0 0 10px;
+}

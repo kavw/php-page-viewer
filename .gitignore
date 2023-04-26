@@ -1,0 +1,27 @@
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# App
+app/.ash_history
+app/*.log*
+app/.composer
+node_modules
+vendor
+var
+
+# Generated files
+*-*.css
+rev-manifest.json
+
+
+# Environment files
+.env
+.*.env

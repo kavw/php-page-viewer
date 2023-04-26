@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+use PV\App\Document\View\ListItemView;
+use PV\App\Document\View\ListView;
+use PV\Infra\Tags\LoopCtx;
+use PV\Infra\View\SimpleRenderer;
+use function PV\Infra\Tags\div;
+use function PV\Infra\Tags\klass;
+use function PV\Infra\Tags\loop;
+use function PV\Infra\Tags\raw;
+use function PV\Infra\Tags\test;
+use function PV\Infra\Tags\ul;
+
+/** @var SimpleRenderer $this */
+/** @var ListView $view */
+$view = $this->view;
+
+echo ul(klass('document-list'),
+
+    loop($view->documents,
+        function (LoopCtx $ctx) {
+            return test((bool) $ctx->item->getTitle(),
+                raw($this->include(
+                    new ListItemView(
+                        document: $ctx->item,
+                        tabIdxBase: 50,
+                        idx: $ctx->i,
+                        last: $ctx->last
+                    )
+                ))
+            );
+        },
+        else: div(klass('empty'), 'There is no content')
+    )
+);

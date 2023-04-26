@@ -1,0 +1,11 @@
+@import "./../node_modules/normalize.css/normalize";
+@import "base/props";
+@import "base/form";
+@import "base/layout";
+
+@import "components/home-logo";
+@import "components/search-form";
+
+@import "components/content";
+@import "components/message";
+@import "components/docment-list";
