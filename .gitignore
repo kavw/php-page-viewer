@@ -9,6 +9,19 @@
 *.sln
 *.sw?
 
+# App
+app/.ash_history
+app/*.log*
+app/.composer
+node_modules
+vendor
+var
+
+# Generated files
+*-*.css
+rev-manifest.json
+
+
 # Environment files
 .env
 .*.env

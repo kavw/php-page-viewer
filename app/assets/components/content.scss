@@ -1,0 +1,5 @@
+main {
+  & > .message {
+    margin-bottom: var(--content-top-padding);
+  }
+}

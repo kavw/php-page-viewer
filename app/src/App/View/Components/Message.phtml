@@ -1,0 +1,14 @@
+<?php
+
+declare(strict_types=1);
+
+use PV\App\View\Components\Message;
+use PV\Infra\View\SimpleRenderer;
+use function PV\Infra\Tags\div;
+use function PV\Infra\Tags\klass;
+
+/** @var SimpleRenderer $this */
+/** @var Message $view */
+$view = $this->view;
+
+echo div(klass('message'), $view->text);

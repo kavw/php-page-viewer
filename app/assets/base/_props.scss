@@ -1,0 +1,30 @@
+:root {
+  --main-bg-color: #F5F9FD;
+  --text-bg-color: #FFF;
+  --main-color: #333;
+  --main-border-color: #e8d5d5;
+  --content-top-padding: 1em;
+  --content-side-padding: 1.5em;
+  --list-item-ver-pad: .7em
+}
+
+body {
+  background: var(--main-bg-color);
+  color: var(--main-color);
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main-bg-color: #383b4c;
+    --text-bg-color: #44475a;
+    --main-color: #f8f8f2;
+    --main-border-color: #383B4CFF;
+  }
+
+  :link { color: #fff; }
+  :visited { color: #b1adad; }
+  :link:active, :visited:active { color: #fff; }
+  :link, :visited { text-decoration: underline; cursor: pointer; }
+}
+

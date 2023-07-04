@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+use PV\App\Document\Routes\Item\ItemController;
+use PV\App\Document\View\ListItemView;
+
+use PV\Infra\View\SimpleRenderer;
+use function PV\Infra\Tags\href;
+use function PV\Infra\Tags\klass;
+use function PV\Infra\Tags\a;
+use function PV\Infra\Tags\li;
+use function PV\Infra\Tags\tabindex;
+
+/** @var SimpleRenderer $this */
+/** @var ListItemView $view */
+$view = $this->view;
+
+echo li(klass('document-list-item', "-i{$view->idx}"),
+        a(
+            href($this->link(
+                ItemController::NAME,
+                ['link' => $view->document->link]
+            )),
+            tabindex($view->tabIdxBase + $view->idx),
+            $view->document->title
+        )
+);

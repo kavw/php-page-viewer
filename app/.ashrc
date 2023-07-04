@@ -1,0 +1,3 @@
+alias q="exit 0"
+alias exit="exit 0"
+alias ll="ls -ahl"
